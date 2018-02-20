@@ -416,7 +416,10 @@ public:
         arguments_.clear();
         variables_.clear();
     }
-    bool exists(const String& name) const { return index_.count(delimit(name)) > 0; }
+    bool exists(const String& name) const {
+        auto it = index_.find(delimit(name));
+        return (it != index_.end()) && (arguments_[it->second].fixed_nargs > 0);
+    }
     size_t count(const String& name) {
         // check if the name is an argument
         if (index_.count(delimit(name)) == 0) return 0;
